@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>결제요청페이지</title>
+</head>
+<body>
+    <form>
+        <input type="text" name="mem_nm" value="" placeholder="이름을입력하세요">
+        <input type="number" name="pay_amount" value="0" placeholder="결제금액 입력하세요">
+        <input type="button" name="btn-payment" value="결제요청" onclick="fn_ajax_payment_request()"/>
+        <div>
+            <span id="lb-payment-result">결제 요청 결과 표시</span>
+        </div>
+    </form>
+
+    <script type="application/javascript">
+        let fn_ajax_payment_request = function() {
+            let name = document.querySelector("[name=mem_nm]").value;
+            let amount = document.querySelector("[name=pay_amount]").value;
+
+            fetch("/api/payment", {
+              method: "POST",
+             headers: {
+                    "Content-Type": "application/json"
+                },
+              body: JSON.stringify({
+                name: name,
+                amount: amount,
+              }),
+            })
+       //     .then((response) => response.json())
+            .then(function(response) {
+                return response.json();
+            })
+            .then((result) => {
+                console.log(result);
+                document.querySelector("#lb-payment-result").innerHTML = result.msg;
+            });
+        }
+         document.addEventListener("DOMContentLoaded", function(){
+
+         });
+    </script>
+
+
+
+
+
+</body>
+
+
+</html>
