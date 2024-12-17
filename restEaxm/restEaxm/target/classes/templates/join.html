@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <div>
+            아이디 <input type="text" name="id" />
+            <input type="button" name="btn-chk" value="중복확인">
+        </div>
+        <div>
+            비밀번호 <input type="password" name="pwd" />
+        </div>
+        <div>
+            이름 <input type="text" name="name" />
+        </div>
+
+        <div>
+            <input type="button" name="btn-join" value="회원가입" />
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        const fn_chk_id = function(id) {
+           axios({
+              method: 'get',
+              url: 'http://localhost:8080/api/user/chk-id',
+              params: {
+                'id': id
+              }
+            })
+          .then(function (response) {
+            console.log(JSON.stringify(response));
+            if(response.data == 'SUCCESS') {
+                alert('사용가능한 아이디 입니다.');
+            }else{
+                alert('사용할 수 없는 아이디 입니다.');
+            }
+          });
+        }
+        document.addEventListener("DOMContentLoaded", function(){
+            let btn = document.querySelector("[name=btn-chk]");
+            btn.addEventListener('click', function() {
+                 let chk_id = document.querySelector("[name=id]").value;
+              //   alert('중복확인할 아이디 : ' + chk_id);
+
+                 fn_chk_id(chk_id);
+            });
+        });
+    </script>
+
+
+</body>
+
+
+</html>
